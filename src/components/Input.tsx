@@ -15,7 +15,7 @@ const InputField = forwardRef<HTMLInputElement, InputProps>(
           {...rest}
           className={`block w-full rounded-md border-0 py-2 pl-5 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6 ${className}`}
         />
-        <CalendarIcon className="absolute right-2 top-2 select-none" />
+        <CalendarIcon className="absolute right-2 top-2 select-none pointer-events-none" />
       </div>
     );
   }

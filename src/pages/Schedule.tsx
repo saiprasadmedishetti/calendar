@@ -93,6 +93,7 @@ export default function Schedule() {
                 value={monthName}
                 options={MONTH_NAMES}
                 onSelect={onMonthSelect}
+                position="left"
               />
             </div>
             <Calendar monthIndex={month} year={year} onClick={onDateSelect} />

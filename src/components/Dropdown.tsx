@@ -6,11 +6,13 @@ type DropdownProps = {
   value: string;
   options: string[];
   onSelect: (option: string, index: number) => void;
+  position?: "left" | "right" | "top" | "bottom"
 };
 export default function Dropdown({
   value = "Select",
   options,
   onSelect,
+  position
 }: DropdownProps) {
   const [visible, setVisible] = useState(false);
   const dropdownRef = useRef(null)
@@ -22,10 +24,25 @@ export default function Dropdown({
 
   useClickOutside(dropdownRef, ()=> setVisible(false))
 
+  const dropdownPosition = () => {
+    switch (position) {
+      case "left":
+        return "right-0"
+      case "right":
+        return "left-0"
+      case "top":
+        return "bottom-0"
+      case "bottom":
+        return "top-0"
+        
+      default:
+        return "left-0"
+    }
+  }
+
   return (
     <>
       <div className="relative inline-block" ref={dropdownRef}>
-        <div>
           <button
             type="button"
             className="inline-flex w-full justify-center items-center gap-x-1.5 rounded-md px-3 py-2 font-medium"
@@ -37,19 +54,18 @@ export default function Dropdown({
             {value}
             <ArrowDown />
           </button>
-        </div>
         {visible && (
           <div
-            className="absolute left-0 z-10 min-w-20 bg-white origin-top-right rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            className={`absolute ${dropdownPosition()} grid grid-cols-3 gap-1 place-items-center p-2 w-80 z-10 min-w-20 bg-white origin-top-right rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="menu-button"
             tabIndex={-1}
           >
             {options?.map((option, idx) => (
-              <div key={option} className="py-1" role="none">
+              <span key={option} className="py-1" role="none">
                 <div
-                  className={`cursor-pointer px-4 py-2 text-sm ${
+                  className={`rounded cursor-pointer px-4 py-2 text-sm ${
                     value === option ? "bg-blue-600 text-white" : ""
                   }`}
                   role="menuitem"
@@ -59,7 +75,7 @@ export default function Dropdown({
                 >
                   {option}
                 </div>
-              </div>
+              </span>
             ))}
           </div>
         )}
